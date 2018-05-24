@@ -1,0 +1,12 @@
+tags:
+  - sql
+  - jupyter
+  - sqlalchemy
+  - many to many
+  - join table
+
+languages:
+  - sql
+  - python
+
+jupyter_notebook: true
