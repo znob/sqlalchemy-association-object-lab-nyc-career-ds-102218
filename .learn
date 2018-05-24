@@ -2,6 +2,7 @@ tags:
   - sql
   - jupyter
   - sqlalchemy
+  - association object
   - many to many
   - join table
 
