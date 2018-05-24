@@ -1,6 +1,7 @@
 import unittest, sys
 sys.path.insert(0, '..')
 from models import *
+from queries import query_experimentation
 
 exec(open("../seed.py").read())
 
@@ -33,3 +34,6 @@ class TestAssociationObject(unittest.TestCase):
     def test_genres_have_many_artists(self):
         classic_rock = session.query(Genre).filter_by(name="Classic Rock").one()
         self.assertEqual(len(classic_rock.artists), 4)
+
+    def test_queries_experimenting(self):
+        query_experimentation(session)

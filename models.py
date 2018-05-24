@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker, relationship, backref
 
 Base = declarative_base()
 
+# Write your classes below
 class Artist(Base):
     __tablename__ = 'artists'
     id = Column(Integer, primary_key=True)
