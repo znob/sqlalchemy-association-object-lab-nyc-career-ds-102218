@@ -3,7 +3,7 @@ sys.path.insert(0, '..')
 from models import *
 from queries import query_experimentation
 
-exec(open("../seed.py").read())
+exec(open("./seed.py").read())
 
 class TestAssociationObject(unittest.TestCase):
     def test_artists(self):
