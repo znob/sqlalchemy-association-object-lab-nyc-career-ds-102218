@@ -9,18 +9,22 @@ class Artist(Base):
     __tablename__ = 'artists'
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    songs = relationship('Song', back_populates="artist")
     genres = relationship(
         'Genre',
-        secondary='songs'
+        secondary='songs',
+        back_populates='artists'
     )
 
 class Genre(Base):
     __tablename__ = 'genres'
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    songs = relationship('Song', back_populates="genre")
     artists = relationship(
-        Artist,
-        secondary='songs'
+        'Artist',
+        secondary='songs',
+        back_populates='genres'
     )
 
 class Song(Base):
@@ -29,8 +33,8 @@ class Song(Base):
     artist_id = Column(Integer, ForeignKey('artists.id'))
     genre_id = Column(Integer, ForeignKey('genres.id'))
     name = Column(String)
-    artist = relationship(Artist, backref=backref("songs", cascade="all, delete-orphan"))
-    genre = relationship(Genre, backref=backref("songs", cascade="all, delete-orphan"))
+    artist = relationship('Artist', back_populates='songs')
+    genre = relationship('Genre', back_populates='songs')
 
 
 engine = create_engine('sqlite:///:memory:')
