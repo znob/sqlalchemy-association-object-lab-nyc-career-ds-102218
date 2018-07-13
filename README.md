@@ -21,7 +21,7 @@ When properly setup, we should be able to see every Artist's songs with `Artist.
 
 ## Instructions
 
-For the purposes of this lab, we will write all of our model classes in the `models.py` file without worrying about using Alembic migrations to alter any of our database schema.
+We will write all of our model classes in the `models.py` file in this lab.
 
 Our Artist and Genre models will be set up just like a normal "has many through" relationship; however, we will need to provide further information to our Song Association Object.
 
@@ -30,30 +30,29 @@ Our Artist and Genre models will be set up just like a normal "has many through"
 Every Artist will have:
 * an `id` (primary key)
 * a `name`
-* a `genres` parameter to configure the has many relationship to genres in the format below
+* a `songs` parameter that establishes the relationship to the Song model and `back_populates` to the artist property of the Song model 
+* a `genres` parameter that configures the has many genres through songs relationship in the format below:
 > ```python
- genres = relationship('Genre', secondary='songs')
+genres = relationship('Genre', secondary='songs', back_populates='artists')
   ```
 
 #### `Genre`
 
 Similarly, every Genre will have:
-- an `id` (primary key)
-- a `name`
-- an `artists` parameter to configure the has many relationship to artists
+* an `id` (primary key)
+* a `name`
+* a `songs` parameter that establishes the relationship to the Song model and `back_populates` to the genre property of the Song model 
+* an `artists` parameter that configures the has many artists through songs relationship
 
 #### `Song`
 
-Similar to the normal "has many through" relationship, our Song join table will have foreign keys for `artist_id` and `genre_id` that use the ForeignKey function to point to their respective matching remote table id values.  But **do not include** the `primary_key=True` parameter for `artist_id` and `genre_id` since the Song's own `id` will serve as the table's primary key.
+Similar to the normal "has many through" relationship, our Song join table will have foreign keys for `artist_id` and `genre_id` that use the ForeignKey function to point to their respective matching remote table id values.
 
 Since each Song is its own object with its own properties, we need to add the following:
 - an `id` (primary key) column
 - a `name`
-- parameters to configure the Song's "belongs to" relationship to Artist and Genre.  Use the format below.
-> ```python
-artist = relationship(Artist, backref=backref("songs", cascade="all, delete-orphan"))
-genre = relationship(Genre, backref=backref("songs", cascade="all, delete-orphan"))
-```
+- an `artist` attribute that establishes the relationship to the Artist model and `back_populates` to an Artist's songs property
+- a `genre` attribute that establishes the relationship to the Genre model and `back_populates` to a Genre's songs property
 
 #### That's It!
 
